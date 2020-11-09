@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -30,20 +32,24 @@ import com.stacksimplify.restservices.springbootbuildingblocks.services.UserServ
 //Controller
 @RestController
 @Validated
+@RequestMapping(value = "/users")
 public class UserController {
 
 	
 	//Auto wire the service
 	@Autowired
+	
 	private UserService userService;
-	@GetMapping("/users")
+	@GetMapping
+	@ResponseStatus(HttpStatus.OK)
 	public List<User> getAllUsers(){
 		
 		 return userService.getAllUsers();
 	}
 	//Get user by Id
 	
-	@GetMapping("/users/{id}")
+	@GetMapping("/{id}")
+	@ResponseStatus(HttpStatus.OK)
 	public Optional <User> getUserById(@PathVariable("id") @Min(1) Long id ){
 		try {
 		return userService.getUserById(id);
@@ -52,7 +58,8 @@ public class UserController {
 		}
 	}
 	//Get user by userName
-	@GetMapping("/users/byusername/{username}") 
+	@GetMapping("byusername/{username}")
+	@ResponseStatus(HttpStatus.OK)
 	public User getUserByUsername(@PathVariable("username") String username)throws UserNameNotFoundException {
 		
 		User user = userService.getUserByUsername(username);
@@ -65,7 +72,8 @@ public class UserController {
 	//Create User
 	//RequestBody
 	//@PostMapping
-	@PostMapping("/users")
+	@PostMapping
+	@ResponseStatus(HttpStatus.CREATED)
 	public ResponseEntity<Void> createUser(@Valid @RequestBody User user,UriComponentsBuilder builder) {
 		try {
 		userService.createUser(user);
@@ -78,7 +86,8 @@ public class UserController {
 	}
 	
 	//Update user by Id
-	@PutMapping("/users/{id}")
+	@PutMapping("{id}")
+	@ResponseStatus(HttpStatus.OK)
 	public User updateUserById(@PathVariable("id") Long id,@RequestBody User user) {
 		try {
 			return userService.updateUser(user, id);
@@ -89,7 +98,8 @@ public class UserController {
 	}
 	
 	//Delete user by Id
-	@DeleteMapping("users/{id}")
+	@DeleteMapping("{id}")
+	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void deleteUserById(@PathVariable("id") Long id) {
 		
 		userService.deleteUserById(id);
