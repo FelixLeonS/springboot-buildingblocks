@@ -13,12 +13,12 @@ import javax.validation.constraints.Size;
 
 import org.springframework.hateoas.RepresentationModel;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonFilter;
 
 @Entity
 @Table(name = "user")
-@JsonIgnoreProperties({"firstname","lastname"})
+//@JsonIgnoreProperties({"firstname","lastname"}) -- Static Filtering with JsonIgnore
+@JsonFilter(value = "userFilter")
 public class User extends RepresentationModel<User> {
 	@Id
 	@GeneratedValue
@@ -36,13 +36,11 @@ public class User extends RepresentationModel<User> {
 	private String email;
 	@Column(name = "ROLE",length = 50, nullable = false)
 	private String role;
-	@JsonIgnore
+	//@JsonIgnore -- Static Filtering with JsonIgnore
 	@Column(name = "SSN",length = 50, nullable = false, unique = true)
 	private String ssn;
-	
-	
 	@OneToMany(mappedBy="user")
-	private List<Order> oders;
+	private List<Order> orders;
 	
 	// No argument constructor
 	public User() {
@@ -103,11 +101,11 @@ public class User extends RepresentationModel<User> {
 		this.ssn = ssn;
 	}
 	
-	public List<Order> getOders() {
-		return oders;
+	public List<Order> getOrders() {
+		return orders;
 	}
-	public void setOders(List<Order> oders) {
-		this.oders = oders;
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
 	}
 	// To String (Optional for bean logging)
 	@Override
