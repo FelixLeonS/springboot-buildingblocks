@@ -15,7 +15,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 @Entity
 @Table(name = "user")
-public class User extends RepresentationModel {
+public class User extends RepresentationModel<User> {
 	@Id
 	@GeneratedValue
 	private Long id;
