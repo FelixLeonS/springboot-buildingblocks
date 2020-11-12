@@ -38,7 +38,6 @@ public class UserController {
 	
 	//Auto wire the service
 	@Autowired
-	
 	private UserService userService;
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
