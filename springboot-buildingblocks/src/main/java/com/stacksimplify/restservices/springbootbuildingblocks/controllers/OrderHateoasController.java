@@ -42,7 +42,7 @@ public class OrderHateoasController {
 			throw new UserNotFoundException("User not found");
 		}
 		
-		List<Order> allOrders = userOptional.get().getOders();
+		List<Order> allOrders = userOptional.get().getOrders();
 		
 		CollectionModel<Order> finalCollection = CollectionModel.of(allOrders);
 		

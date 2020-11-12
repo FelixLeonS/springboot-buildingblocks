@@ -43,7 +43,7 @@ public class OrderController {
 			throw new UserNotFoundException("User not found");
 		}
 		
-		return userOptional.get().getOders();
+		return userOptional.get().getOrders();
 		
 	
 	}
