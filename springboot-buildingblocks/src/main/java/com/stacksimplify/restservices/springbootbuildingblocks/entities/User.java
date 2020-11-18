@@ -37,7 +37,7 @@ public class User extends RepresentationModel<User> {
 	@Column(name = "LAST_NAME",length = 50, nullable = false)
 	@JsonView(Views.External.class)
 	private String lastname;
-	@Column(name = "EMAIL_ADDRESS",length = 50, nullable = false)
+	@Column(name = "EMAIL",length = 50, nullable = false)
 	@JsonView(Views.External.class)
 	private String email;
 	@Column(name = "ROLE",length = 50, nullable = false)
