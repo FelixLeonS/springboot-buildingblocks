@@ -25,37 +25,44 @@ public class User extends RepresentationModel<User> {
 	@GeneratedValue
 	@JsonView(External.class)
 	private Long id;
-	
-	@Column(name = "USER_NAME",length = 50, nullable = false, unique = true)
+
+	@Column(name = "USER_NAME", length = 50, nullable = false, unique = true)
 	@NotEmpty(message = "Username is a mandatory field, please provide a username")
 	@JsonView(Views.External.class)
 	private String username;
-	@Size(min = 2, message ="Minimin size for first name is 2 characters")
-	@Column(name = "FIRST_NAME",length = 50, nullable = false)
+	@Size(min = 2, message = "Minimin size for first name is 2 characters")
+	@Column(name = "FIRST_NAME", length = 50, nullable = false)
 	@JsonView(Views.External.class)
 	private String firstname;
-	@Column(name = "LAST_NAME",length = 50, nullable = false)
+	@Column(name = "LAST_NAME", length = 50, nullable = false)
 	@JsonView(Views.External.class)
 	private String lastname;
-	@Column(name = "EMAIL",length = 50, nullable = false)
+	@Column(name = "EMAIL", length = 50, nullable = false)
 	@JsonView(Views.External.class)
 	private String email;
-	@Column(name = "ROLE",length = 50, nullable = false)
+	@Column(name = "ROLE", length = 50, nullable = false)
 	private String role;
-	//@JsonIgnore -- Static Filtering with JsonIgnore
-	@Column(name = "SSN",length = 50, nullable = false, unique = true)
+	// @JsonIgnore -- Static Filtering with JsonIgnore
+	@Column(name = "SSN", length = 50, nullable = false, unique = true)
 	@JsonView(Views.Internal.class)
 	private String ssn;
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy = "user")
 	@JsonView(Views.Internal.class)
 	private List<Order> orders;
-	
+	@Column(name = "ADDRESS", length = 50, nullable = false, unique = false)
+	private String address;
+
 	// No argument constructor
 	public User() {
-		
+
 	}
+
 	// Fields constructor
-	public User(Long id, String username, String firstname, String lastname, String email, String role, String ssn) {
+	public User(Long id,
+			@NotEmpty(message = "Username is a mandatory field, please provide a username") String username,
+			@Size(min = 2, message = "Minimin size for first name is 2 characters") String firstname, String lastname,
+			String email, String role, String ssn, List<Order> orders, String address) {
+		super();
 		this.id = id;
 		this.username = username;
 		this.firstname = firstname;
@@ -63,67 +70,89 @@ public class User extends RepresentationModel<User> {
 		this.email = email;
 		this.role = role;
 		this.ssn = ssn;
+		this.orders = orders;
+		this.address = address;
 	}
-	
+
 	// Getter and setters
 	public Long getId() {
 		return id;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public String getUsername() {
 		return username;
 	}
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
+
 	public String getFirstname() {
 		return firstname;
 	}
+
 	public void setFirstname(String firstname) {
 		this.firstname = firstname;
 	}
+
 	public String getLastname() {
 		return lastname;
 	}
+
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
+
 	public String getRole() {
 		return role;
 	}
+
 	public void setRole(String role) {
 		this.role = role;
 	}
+
 	public String getSsn() {
 		return ssn;
 	}
+
 	public void setSsn(String ssn) {
 		this.ssn = ssn;
 	}
-	
+
 	public List<Order> getOrders() {
 		return orders;
 	}
+
 	public void setOrders(List<Order> orders) {
 		this.orders = orders;
 	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 	// To String (Optional for bean logging)
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", firstname=" + firstname + ", lastname=" + lastname
-				+ ", email=" + email + ", role=" + role + ", ssn=" + ssn + "]";
+				+ ", email=" + email + ", role=" + role + ", ssn=" + ssn + ", orders=" + orders + ", address=" + address
+				+ "]";
 	}
-	
-	
-	
-	
-	
+
 }
