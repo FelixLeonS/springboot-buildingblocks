@@ -9,6 +9,7 @@ import javax.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,7 +30,12 @@ import com.stacksimplify.restservices.springbootbuildingblocks.exceptions.UserNa
 import com.stacksimplify.restservices.springbootbuildingblocks.exceptions.UserNotFoundException;
 import com.stacksimplify.restservices.springbootbuildingblocks.services.UserService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 //Controller
+@Api(tags = "Controller for User Management service", value = "User Controller", description ="Controller for User Management service")
 @RestController
 @Validated
 @RequestMapping(value = "/users")
@@ -39,24 +45,26 @@ public class UserController {
 	//Auto wire the service
 	@Autowired
 	private UserService userService;
-	@GetMapping
+	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	public List<User> getAllUsers(){
 		
 		 return userService.getAllUsers();
 	}
 	//Get user by Id
-	
+	@ApiOperation(value = "retive list of users")
 	@GetMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public Optional <User> getUserById(@PathVariable("id") @Min(1) Long id ){
+	public User getUserById(@PathVariable("id") @Min(1) Long id ){
 		try {
-		return userService.getUserById(id);
+		Optional<User> optionalUser = userService.getUserById(id);
+		return optionalUser.get();
 		} catch(UserNotFoundException ex) {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND,ex.getMessage());
 		}
 	}
 	//Get user by userName
+	@ApiOperation(value = "retive a single user by it's id")
 	@GetMapping("byusername/{username}")
 	@ResponseStatus(HttpStatus.OK)
 	public User getUserByUsername(@PathVariable("username") String username)throws UserNameNotFoundException {
@@ -71,9 +79,10 @@ public class UserController {
 	//Create User
 	//RequestBody
 	//@PostMapping
+	@ApiOperation(value = "create a new user")
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ResponseEntity<Void> createUser(@Valid @RequestBody User user,UriComponentsBuilder builder) {
+	public ResponseEntity<Void> createUser(@ApiParam("Info for new user to be created") @Valid @RequestBody User user,UriComponentsBuilder builder) {
 		try {
 		userService.createUser(user);
 		HttpHeaders headers = new HttpHeaders();

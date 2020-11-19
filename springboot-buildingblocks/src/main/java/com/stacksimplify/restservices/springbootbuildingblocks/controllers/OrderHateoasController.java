@@ -22,7 +22,7 @@ import com.stacksimplify.restservices.springbootbuildingblocks.repositories.User
 import com.stacksimplify.restservices.springbootbuildingblocks.services.OrderService;
 
 @RestController
-@RequestMapping(value = "/users/hateoas")
+@RequestMapping(value = "/hateoas/users/")
 public class OrderHateoasController {
 	
 	@Autowired

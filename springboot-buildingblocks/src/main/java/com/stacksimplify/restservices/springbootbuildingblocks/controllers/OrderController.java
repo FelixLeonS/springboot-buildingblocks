@@ -51,7 +51,7 @@ public class OrderController {
 	
 	@GetMapping("/{userid}/orders/{oderid}")
 	@ResponseStatus(HttpStatus.OK)
-	private Optional<Order> getOrderById(@PathVariable Long userid,
+	private Order getOrderById(@PathVariable Long userid,
 										@PathVariable Long oderid) throws UserNotFoundException{
 		
 		Optional <User> userOptional = userRepository.findById(userid);
@@ -62,7 +62,8 @@ public class OrderController {
 			}
 		
 			try {
-				return orderService.findOrderById(userid, oderid);
+				Optional<Order> orderOptional = orderService.findOrderById(userid, oderid);
+				return orderOptional.get();
 			}catch(OrderNotFoundException ex) {
 				throw new ResponseStatusException(HttpStatus.NOT_FOUND,ex.getMessage());				
 			}
