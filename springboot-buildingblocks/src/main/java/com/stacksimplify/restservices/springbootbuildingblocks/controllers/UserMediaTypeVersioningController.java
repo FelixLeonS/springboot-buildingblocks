@@ -18,7 +18,6 @@ import com.stacksimplify.restservices.springbootbuildingblocks.exceptions.UserNo
 import com.stacksimplify.restservices.springbootbuildingblocks.services.UserService;
 import com.stacksimplify.restservices.springbootbuildingblocks.services.dtos.UserDtoV1;
 import com.stacksimplify.restservices.springbootbuildingblocks.services.dtos.UserDtoV2;
-import com.stacksimplify.restservices.springbootbuildingblocks.services.dtos.UserMmDto;
 
 @RestController
 @RequestMapping("/versioning/mediatype/users")
